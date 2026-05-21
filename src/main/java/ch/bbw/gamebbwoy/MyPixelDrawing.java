@@ -13,7 +13,6 @@ public class MyPixelDrawing implements PixelDrawing {
 
 	@Override
 	public void tick(PixelDisplay graphic) {
-		graphic.clear();
 		// sets a pixel top left
 		graphic.setPixel(5, 5, PixelColor.BLACK);
 	}

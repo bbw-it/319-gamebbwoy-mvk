@@ -7,6 +7,7 @@ import ch.bbw.gamebbwoy.api.PixelDisplay;
 import ch.bbw.gamebbwoy.api.PixelDrawing;
 
 import javax.swing.*;
+import javax.swing.text.Position;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -18,11 +19,15 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Generally don't look at this class.
+ * It implements a SwingUI to draw simple pixels in four colours.
+ */
 public class GameBbwoy {
 
 	public static final int FPS = 60;
 
-	private GameBbwoy() {
+	protected GameBbwoy() {
 		// hidden, use playGame instead
 	}
 
@@ -38,16 +43,24 @@ public class GameBbwoy {
 		}
 	}
 
-	private static void playGameInternal(PixelDrawing logic) throws Exception {
+	private static Point centerOfScreen(Dimension windowSize) {
+		// in case of multiple screens, take the one with the mouse on
+		var screenBounds = MouseInfo.getPointerInfo().getDevice().getDefaultConfiguration().getBounds();
+		var x = screenBounds.x + (screenBounds.width - windowSize.width) / 2;
+		var y = screenBounds.y + (screenBounds.height - windowSize.height) / 2;
+		return new Point(x, y);
+	}
+
+	protected static void playGameInternal(PixelDrawing logic) throws Exception {
 		System.setProperty("sun.java2d.opengl", "true");
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		var display = new SwingDisplay();
 		logic.initialize(display);
 		SwingUtilities.invokeLater(() -> {
-			var mainWindow = new JFrame("GameBbwoy");
+			var mainWindow = new JFrame("GameBBWoy");
 			mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			mainWindow.setLocationRelativeTo(null);
 			mainWindow.setContentPane(display);
+			mainWindow.setLocation(centerOfScreen(display.getPreferredSize()));
 			mainWindow.setResizable(false);
 			mainWindow.setVisible(true);
 			mainWindow.pack();
@@ -56,16 +69,19 @@ public class GameBbwoy {
 				mainWindow.addKeyListener(new SwingController(buttonAware));
 			}
 		});
-		var future = Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
-			logic.tick(display);
-			display.refresh();
-		}, 0, 1000 / FPS, TimeUnit.MILLISECONDS);
-		future.get(); // blocks forever
+		try(var executor = Executors.newSingleThreadScheduledExecutor()) {
+			var future = executor.scheduleAtFixedRate(() -> {
+				display.clear();
+				logic.tick(display);
+				display.refresh();
+			}, 0, 1000 / FPS, TimeUnit.MILLISECONDS);
+			future.get(); // blocks forever
+		}
 	}
 
 	private static class SwingDisplay extends JPanel implements PixelDisplay {
 
-		private static final int SCALE = 3;
+		private static final int SCALE = 8;
 		private static final int[] COLORS = new int[]{0xe6f8da, 0x99c886, 0x437969, 0x051f2a};
 		private final int pixelWidth;
 		private final int pixelHeight;
@@ -124,7 +140,6 @@ public class GameBbwoy {
 		}
 
 		private static Optional<GameButton> keyEventToButton(KeyEvent e) {
-			// TODO 06-Nov-2023/kk: add debouncing to guarantee 1 event no matter the keyboard
 			return Optional.ofNullable(switch (e.getKeyCode()) {
 				case KeyEvent.VK_LEFT -> GameButton.LEFT;
 				case KeyEvent.VK_RIGHT -> GameButton.RIGHT;
@@ -132,6 +147,10 @@ public class GameBbwoy {
 				case KeyEvent.VK_UP -> GameButton.UP;
 				case KeyEvent.VK_SPACE -> GameButton.SPACE;
 				case KeyEvent.VK_CONTROL -> GameButton.CTRL;
+				case KeyEvent.VK_W -> GameButton.W;
+				case KeyEvent.VK_A -> GameButton.A;
+				case KeyEvent.VK_S -> GameButton.S;
+				case KeyEvent.VK_D -> GameButton.D;
 				default -> null;
 			});
 		}

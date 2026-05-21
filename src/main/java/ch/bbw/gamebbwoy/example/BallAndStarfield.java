@@ -5,14 +5,19 @@ import ch.bbw.gamebbwoy.api.PixelDisplay;
 import ch.bbw.gamebbwoy.api.PixelDrawing;
 import ch.bbw.gamebbwoy.internal.GameBbwoy;
 
-public class ExampleDrawing implements PixelDrawing, ButtonListener {
+/**
+ * Combines multiple effects into one.
+ */
+public class BallAndStarfield implements PixelDrawing, ButtonListener {
 
 	private final PixelSprite ball = PixelSprite.ball();
+
 	private final MovableSprite movingBall = new MovableSprite(ball);
-	private final Starfield starfield = new Starfield();
+
+	private final StarfieldAnimation starfieldAnimation = new StarfieldAnimation();
 
 	public static void main(String[] args) throws Throwable {
-		GameBbwoy.playGame(new ExampleDrawing());
+		GameBbwoy.playGame(new BallAndStarfield());
 	}
 
 	@Override
@@ -24,20 +29,17 @@ public class ExampleDrawing implements PixelDrawing, ButtonListener {
 
 	@Override
 	public void tick(PixelDisplay graphic) {
-		graphic.clear();
-		starfield.tick(graphic); // background is drawn before the ball
+		starfieldAnimation.tick(graphic); // background is drawn BEFORE the ball
 		movingBall.tick(graphic);
 	}
 
 	@Override
 	public void onButtonPress(GameButton button) {
-		System.out.println("down: " + button);
 		movingBall.onButton(button, true);
 	}
 
 	@Override
 	public void onButtonRelease(GameButton button) {
-		System.out.println("up: " + button);
 		movingBall.onButton(button, false);
 	}
 }

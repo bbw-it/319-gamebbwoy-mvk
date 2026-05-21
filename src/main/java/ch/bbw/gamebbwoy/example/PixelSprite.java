@@ -1,24 +1,37 @@
 package ch.bbw.gamebbwoy.example;
 
+import java.util.List;
+
 import ch.bbw.gamebbwoy.api.PixelColor;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
 import ch.bbw.gamebbwoy.api.PixelDrawing;
-
-import java.util.List;
+import ch.bbw.gamebbwoy.internal.GameBbwoy;
 
 /**
  * Draws a <a href="https://de.wikipedia.org/wiki/Sprite_(Computergrafik)">Sprite</a>.
  */
 public class PixelSprite implements PixelDrawing {
 
-	private final List<Integer> pixels;
+	public static void main(String[] args) throws Throwable {
+		// This doesn't do much aside from drawing a static ball top-left
+		GameBbwoy.playGame(PixelSprite.ball());
+	}
+
+	/**
+	 * Stores all pixels of this sprite in a 1-dimensional list.
+	 */
+	private final List<PixelColor> pixels;
+
 	private final int width;
+
 	private final int height;
+
 	/**
 	 * x,y are represented as {@code double} to move it around the screen fluently. When drawing it, they are always
 	 * reduced (rounded down) to an {@code int}.
 	 */
 	private double x;
+
 	private double y;
 
 	/**
@@ -26,12 +39,12 @@ public class PixelSprite implements PixelDrawing {
 	 * {@code pixels.size()}.
 	 *
 	 * @param pixels One-dimensional array holding all pixel values. Pixel at position (h,w) can be obtained via
-	 *               pixels.get(h + w * height).
-	 * @param width  (Breite) in pixels
+	 * pixels.get(h + w * height).
+	 * @param width (Breite) in pixels
 	 * @param height (Höhe) in pixels
 	 */
 	public PixelSprite(List<Integer> pixels, int width, int height) {
-		this.pixels = pixels;
+		this.pixels = pixels.stream().map(PixelColor::fromValue).toList();
 		this.width = width;
 		this.height = height;
 		if (width * height != pixels.size()) {
@@ -56,7 +69,7 @@ public class PixelSprite implements PixelDrawing {
 		for (int w = 0; w < width; w++) {
 			for (int h = 0; h < height; h++) {
 				var color = pixels.get(h + w * height);
-				graphic.setPixel(w + (int) x, h + (int) y, PixelColor.fromValue(color));
+				graphic.setPixel(w + (int) x, h + (int) y, color);
 			}
 		}
 	}
@@ -73,12 +86,12 @@ public class PixelSprite implements PixelDrawing {
 		return x;
 	}
 
-	public double getY() {
-		return y;
-	}
-
 	public void setX(double x) {
 		this.x = x;
+	}
+
+	public double getY() {
+		return y;
 	}
 
 	public void setY(double y) {

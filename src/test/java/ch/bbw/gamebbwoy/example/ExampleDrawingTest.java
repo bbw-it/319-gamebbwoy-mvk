@@ -21,7 +21,7 @@ class ExampleDrawingTest implements WithAssertions {
 	void thereIsABall() {
 		// GIVEN
 		var graphic = new MockGraphic();
-		var logic = new ExampleDrawing();
+		var logic = new BallAndStarfield();
 
 		// WHEN
 		logic.tick(graphic);

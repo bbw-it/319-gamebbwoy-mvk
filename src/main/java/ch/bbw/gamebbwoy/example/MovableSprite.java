@@ -1,15 +1,31 @@
 package ch.bbw.gamebbwoy.example;
 
-import ch.bbw.gamebbwoy.api.ButtonListener.GameButton;
+import ch.bbw.gamebbwoy.api.ButtonListener;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
 import ch.bbw.gamebbwoy.api.PixelDrawing;
+import ch.bbw.gamebbwoy.internal.GameBbwoy;
 
-public class MovableSprite implements PixelDrawing {
+/**
+ * Wraps around a {@link PixelSprite} and makes the sprite move/bounce based on Arrow-Keys.
+ */
+public class MovableSprite implements PixelDrawing, ButtonListener {
+
+	public static void main(String[] args) throws Throwable {
+		var ball = PixelSprite.ball();
+		var movingBall = new MovableSprite(ball);
+		movingBall.xVelocity = 1;
+		movingBall.yVelocity = 0.5;
+		GameBbwoy.playGame(movingBall);
+	}
 
 	private final PixelSprite sprite;
+
 	double xVelocity;
+
 	double yVelocity;
+
 	double xAcceleration;
+
 	double yAcceleration;
 
 	public MovableSprite(PixelSprite sprite) {
@@ -18,10 +34,10 @@ public class MovableSprite implements PixelDrawing {
 
 	public void onButton(GameButton button, boolean isDown) {
 		switch (button) {
-			case UP -> yAcceleration = isDown ? -0.05 : 0;
-			case DOWN -> yAcceleration = isDown ? 0.05 : 0;
-			case LEFT -> xAcceleration = isDown ? -0.05 : 0;
-			case RIGHT -> xAcceleration = isDown ? 0.05 : 0;
+			case UP, W -> yAcceleration = isDown ? -0.05 : 0;
+			case DOWN, S -> yAcceleration = isDown ? 0.05 : 0;
+			case LEFT, A -> xAcceleration = isDown ? -0.05 : 0;
+			case RIGHT, D -> xAcceleration = isDown ? 0.05 : 0;
 			default -> {
 			} // ignore the rest
 		}
@@ -55,5 +71,15 @@ public class MovableSprite implements PixelDrawing {
 		sprite.setY(nextY);
 
 		sprite.tick(graphic);
+	}
+
+	@Override
+	public void onButtonPress(GameButton button) {
+		onButton(button, true);
+	}
+
+	@Override
+	public void onButtonRelease(GameButton button) {
+		onButton(button, false);
 	}
 }

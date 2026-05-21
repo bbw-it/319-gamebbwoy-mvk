@@ -3,14 +3,19 @@ package ch.bbw.gamebbwoy.example;
 import ch.bbw.gamebbwoy.api.PixelColor;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
 import ch.bbw.gamebbwoy.api.PixelDrawing;
+import ch.bbw.gamebbwoy.internal.GameBbwoy;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Draws a starfield-effect.
+ * Draws a starfield-effect like flying in a spacecraft.
  */
-public class Starfield implements PixelDrawing {
+public class StarfieldAnimation implements PixelDrawing {
+
+	public static void main(String[] args) throws Throwable {
+		GameBbwoy.playGame(new StarfieldAnimation());
+	}
 
 	private final List<Star> stars = Stream.generate(Star::new).limit(100).toList();
 
@@ -23,10 +28,10 @@ public class Starfield implements PixelDrawing {
 
 	static class Star implements PixelDrawing {
 
-		private final double vx = (Math.random() - 0.5) * 2;
-		private final double vy = (Math.random() - 0.5) * 1.5;
-		private double x;
-		private double y;
+		private final double vx = (Math.random() - 0.5) * 2; // speed in the x-direction
+		private final double vy = (Math.random() - 0.5) * 1.5; // speed in the y-direction
+		private double x; // current x-position: updated with every frame
+		private double y; // current y-position
 
 		@Override
 		public void tick(PixelDisplay graphic) {

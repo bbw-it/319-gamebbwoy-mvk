@@ -23,7 +23,11 @@ public interface ButtonListener {
 		UP,
 		DOWN,
 		SPACE,
-		CTRL
+		CTRL,
+		W,
+		A,
+		S,
+		D
 	}
 
 }
