@@ -1,0 +1,41 @@
+flowchart TD
+    A([Start tick]) --> B["timer++"]
+    B --> C["dwarfFrames initialisieren"]
+
+    C --> D{"timer % 10 == 0?"}
+
+    D -- Ja --> E["frame++"]
+    E --> F["graphic.clear()"]
+    F --> G{"frame >= dwarfFrames.length?"}
+    G -- Ja --> H["frame = 0"]
+    G -- Nein --> I["weiter"]
+    H --> I
+
+    D -- Nein --> I
+
+    I --> J["currentDwarf = dwarfFrames[frame]"]
+    J --> K["x = graphic.getPixelWidth() / 2"]
+    K --> L["y = graphic.getPixelHeight() / 2"]
+    L --> M["drawSprite(graphic, currentDwarf, x, y)"]
+    M --> N["y = 0"]
+
+    N --> O{"y < sprite.length?"}
+    O -- Nein --> P([Ende])
+    O -- Ja --> Q["x = 0"]
+
+    Q --> R{"x < sprite[y].length?"}
+    R -- Nein --> S["y++"]
+    S --> Q
+
+    R -- Ja --> T["colorNumber = sprite[y][x]"]
+    T --> U{"colorNumber == 4?"}
+
+    U -- Ja --> V["x++"]
+    V --> R
+
+    U -- Nein --> W["color = PixelColor.fromValue(colorNumber)"]
+    W --> X["graphic.setPixel(x + xOffset, y + yOffset, color)"]
+    X --> Y["x++"]
+    Y --> R
+
+    M --> N([Ende])

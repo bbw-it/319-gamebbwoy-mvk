@@ -1,0 +1,20 @@
+flowchart TD
+    A([Start: nestedLoop width, height]) --> B["Ausgabe: Wir brauchen 2 Schleifen."]
+    B --> C["Ausgabe: Die 1. Schleife iteriert über height mit i."]
+    C --> D["Ausgabe: Die 2. Schleife iteriert über width mit j."]
+
+    D --> E["i = 0"]
+    E --> F{"i < height?"}
+
+    F -- Nein --> Z([Ende])
+    F -- Ja --> G["j = 0"]
+
+    G --> H{"j < width?"}
+
+    H -- Ja --> I["Ausgabe: aktuelles j: j"]
+    I --> J["j++"]
+    J --> H
+
+    H -- Nein --> K["Ausgabe: aktuelles i: i"]
+    K --> L["i++"]
+    L --> F

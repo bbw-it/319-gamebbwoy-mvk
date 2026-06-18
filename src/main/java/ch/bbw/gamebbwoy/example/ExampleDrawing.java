@@ -7,9 +7,9 @@ import ch.bbw.gamebbwoy.internal.GameBbwoy;
 
 public class ExampleDrawing implements PixelDrawing, ButtonListener {
 
-	private final PixelSprite ball = PixelSprite.ball();
-	private final MovableSprite movingBall = new MovableSprite(ball);
-	private final Starfield starfield = new Starfield();
+	// private final PixelSprite ball = PixelSprite.ball();
+	private final MovableSprite ball = new MovableSprite(ExampleShape.ball());
+	// private final Starfield starfield = new Starfield();
 
 	public static void main(String[] args) throws Throwable {
 		GameBbwoy.playGame(new ExampleDrawing());
@@ -25,19 +25,19 @@ public class ExampleDrawing implements PixelDrawing, ButtonListener {
 	@Override
 	public void tick(PixelDisplay graphic) {
 		graphic.clear();
-		starfield.tick(graphic); // background is drawn before the ball
-		movingBall.tick(graphic);
+		// starfield.tick(graphic); // background is drawn before the ball
+		ball.tick(graphic);
 	}
 
 	@Override
 	public void onButtonPress(GameButton button) {
 		System.out.println("down: " + button);
-		movingBall.onButton(button, true);
+		ball.onButton(button, true);
 	}
 
 	@Override
 	public void onButtonRelease(GameButton button) {
 		System.out.println("up: " + button);
-		movingBall.onButton(button, false);
+		ball.onButton(button, false);
 	}
 }

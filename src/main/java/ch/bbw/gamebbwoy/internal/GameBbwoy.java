@@ -66,7 +66,7 @@ public class GameBbwoy {
 	private static class SwingDisplay extends JPanel implements PixelDisplay {
 
 		private static final int SCALE = 3;
-		private static final int[] COLORS = new int[]{0xe6f8da, 0x99c886, 0x437969, 0x051f2a};
+		private static final int[] COLORS = new int[]{0xe6f8da, 0x99c886, 0x437969, 0x051f2a, 0xffffff};
 		private final int pixelWidth;
 		private final int pixelHeight;
 		private final transient BufferedImage img;
