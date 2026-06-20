@@ -2,215 +2,161 @@ package ch.bbw.gamebbwoy.gameobjects.dwarfrun.gameobjects;
 
 import ch.bbw.gamebbwoy.api.ButtonListener;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
-import ch.bbw.gamebbwoy.api.PixelDrawing;
+import ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites.DwarfSprites;
 import ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites.SpriteDrawer;
+import ch.bbw.gamebbwoy.gameobjects.dwarfrun.world.World;
 
-public class Dwarf implements PixelDrawing, ButtonListener {
+public class Dwarf implements ButtonListener {
 
-    private final int[][] pixels;
+//    private final int[][] pixels;
     private double x;
     private double y;
-    private double xOffset;
-    private double yOffset;
 
-    private double xVelocity;
-    private final double MAX_POS_VELOCITY = 1.0;
-    private final double MAX_NEG_VELOCITY = -1.0;
-    private double xAcceleration;
+    private double velocityX = 0;
+    private double velocityY = 0;
 
-    public Dwarf() {
-        this.pixels = dwarf;
-    }
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
 
-    // Aufgabe: Mit pixelpad.ch ein Sprite zeichnen und darstellen.
-    // Das ist ein Array: Wir lesen via `xxx[zeile][spalte]` aus.
-    // Der Wert 4 ist ein leeres Pixel.
-    int[][] dwarf = {
-            {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
-            {4, 4, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
-            {4, 2, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
-            {4, 2, 4, 3, 1, 1, 1, 1, 1, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 1, 1, 2, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 1, 1, 2, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 1, 1, 2, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 2, 1, 1, 1, 2, 4, 4, 4, 4},
-            {4, 4, 2, 2, 4, 4, 4, 2, 2, 4, 4, 4},
-            {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}
-    };
+    private int timer = 0;
+    private int animationFrame = 0;
 
-    //Stehen
-    int[][] standingDwarf = {
-            {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
-            {4, 4, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
-            {4, 2, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
-            {4, 2, 4, 3, 1, 1, 1, 1, 1, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 1, 1, 2, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 1, 1, 2, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 1, 1, 2, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 2, 1, 1, 1, 2, 4, 4, 4, 4},
-            {4, 4, 2, 2, 4, 4, 4, 2, 2, 4, 4, 4},
-            {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}
-    };
+    private int score = 0;
 
-    // Laufen 1
-    int[][] runningDwarf1 = {
-            {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
-            {4, 2, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
-            {4, 4, 4, 3, 1, 1, 1, 1, 1, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 2, 4, 4},
-            {4, 2, 2, 1, 1, 1, 1, 1, 1, 2, 4, 4},
-            {4, 2, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 2, 1, 4, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 4, 4, 4, 4, 2, 2, 4, 4, 4},
-            {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}
-    };
+    private static final double ACCELERATION = 0.15;
+    private static final double FRICTION = 0.85;
+    private static final double MAX_SPEED = 1.5;
 
-    //Laufen 2
-    int[][] runningDwarf2 = {
-            {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
-            {4, 4, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
-            {4, 2, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
-            {4, 4, 4, 3, 1, 1, 1, 1, 1, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 1, 1, 2, 4, 4, 4},
-            {4, 4, 4, 2, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 1, 4, 4, 4, 4, 4},
-            {4, 4, 4, 2, 4, 4, 2, 2, 4, 4, 4, 4},
-            {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}
-    };
+    private static final double GRAVITY = 0.2;
+    private static final double MAX_FALL_SPEED = 3.0;
 
-    // Laufen 3
-    int[][] runningDwarf3 = {
-            {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
-            {4, 4, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
-            {4, 2, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
-            {4, 2, 4, 3, 1, 1, 1, 1, 1, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 2, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 2, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 2, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 2, 1, 1, 1, 4, 4, 4, 4, 4},
-            {4, 4, 4, 2, 2, 4, 2, 2, 4, 4, 4, 4},
-            {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}
-    };
-
-    // Laufen 4
-    int[][] runningDwarf4 = {
-            {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
-            {4, 4, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
-            {4, 2, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
-            {4, 4, 4, 3, 1, 1, 1, 1, 1, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 2, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 2, 2, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 1, 1, 2, 1, 4, 4, 4, 4, 4},
-            {4, 4, 4, 2, 4, 2, 2, 4, 4, 4, 4, 4},
-            {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}
-    };
-
-    // Laufen 5
-    int[][] runningDwarf5 = {
-            {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
-            {4, 2, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
-            {4, 2, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
-            {4, 4, 4, 3, 1, 1, 1, 1, 1, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 2, 1, 2, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 1, 2, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 4, 1, 1, 1, 1, 1, 4, 4, 4, 4},
-            {4, 4, 2, 1, 1, 1, 2, 4, 4, 4, 4, 4},
-            {4, 4, 2, 4, 4, 4, 2, 2, 4, 4, 4, 4},
-            {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}
-    };
-
-    int frame = 0;
-    int timer = 0;
-    int[][][] dwarfFrames = {
-            runningDwarf1,
-            runningDwarf2,
-            runningDwarf3,
-            runningDwarf4,
-            runningDwarf5,
-            runningDwarf4,
-            runningDwarf3,
-            runningDwarf2
-    };
-
-    @Override
-    public void initialize(PixelDisplay graphic) {
-        // initialize x and y by the offset of the starting position --> put the dwarf at the bottom mid of the screen
-        xOffset = (double) graphic.getPixelWidth() / 2;
-        yOffset = (double) graphic.getPixelHeight() * 4 / 5;
-        x = xOffset;
-        y = yOffset;
-    }
-
-    @Override
-    public void tick(PixelDisplay graphic) {
-        if (xVelocity >= MAX_POS_VELOCITY && xAcceleration > 0) {
-            xVelocity = MAX_POS_VELOCITY;
-        } else if(xVelocity <= MAX_NEG_VELOCITY && xAcceleration < 0) {
-            xVelocity = MAX_NEG_VELOCITY;
-        } else {
-            xVelocity += xAcceleration;
-        }
-
-        var nextX = x + xVelocity;
-        if (nextX < 0) { // out of bound on the left
-            xVelocity = 0;
-            nextX = 0;
-        } else if (graphic.getPixelWidth() < (int) (pixels[0].length + nextX)) { // out of bounds right
-            xVelocity = 0;
-            nextX = graphic.getPixelWidth() - pixels[0].length;
-        }
-        x = nextX;
-
+    public void update(World world) {
         timer++;
 
-        if (timer % 10 == 0) {
-            frame++;
-            graphic.clear(); // this clears the pixels from the last dwarfFrame
-            if (frame >= dwarfFrames.length) {
-                frame = 0;
+        updateHorizontalMovement();
+        updateGravity(world);
+        updateAnimation();
+
+        score++;
+    }
+
+    private void updateHorizontalMovement() {
+        if (leftPressed) {
+            velocityX -= ACCELERATION;
+        }
+
+        if (rightPressed) {
+            velocityX += ACCELERATION;
+        }
+
+        if (velocityX > MAX_SPEED) {
+            velocityX = MAX_SPEED;
+        }
+
+        if (velocityX < -MAX_SPEED) {
+            velocityX = -MAX_SPEED;
+        }
+
+        x += velocityX;
+
+        if (!leftPressed && !rightPressed) {
+            velocityX *= FRICTION;
+        }
+    }
+
+    private void updateGravity(World world) {
+        if (!isStandingOnGround(world)) {
+            velocityY += GRAVITY;
+
+            if (velocityY > MAX_FALL_SPEED) {
+                velocityY = MAX_FALL_SPEED;
+            }
+        } else {
+            velocityY = 0;
+        }
+
+        y += velocityY;
+
+        while (isCollidingWithGround(world)) {
+            y--;
+            velocityY = 0;
+        }
+    }
+
+    private boolean isStandingOnGround(World world) {
+        int[][] sprite = getCurrentSprite();
+
+        int leftFootX = (int) x + 2;
+        int rightFootX = (int) x + sprite[0].length - 3;
+        int footY = (int) y + sprite.length;
+
+        return world.isSolidPixel(leftFootX, footY)
+                || world.isSolidPixel(rightFootX, footY);
+    }
+
+    private boolean isCollidingWithGround(World world) {
+        int[][] sprite = getCurrentSprite();
+
+        int leftFootX = (int) x + 2;
+        int rightFootX = (int) x + sprite[0].length - 3;
+        int bottomY = (int) y + sprite.length - 1;
+
+        return world.isSolidPixel(leftFootX, bottomY)
+                || world.isSolidPixel(rightFootX, bottomY);
+    }
+
+    private void updateAnimation() {
+        boolean isMoving = leftPressed || rightPressed;
+
+        if (!isMoving) {
+            animationFrame = 0;
+            return;
+        }
+
+        if (timer % 8 == 0) {
+            animationFrame++;
+
+            if (animationFrame >= DwarfSprites.RUNNING_FRAMES.length) {
+                animationFrame = 0;
             }
         }
-
-        int[][] currentDwarf = dwarfFrames[frame];
-
-        SpriteDrawer.drawSprite(graphic, currentDwarf, (int) x, (int) y);
     }
 
-    @Override
-    public void onButtonPress(ButtonListener.GameButton button) {
-        System.out.println("down: " + button);
-        move(button, true);
+    public void draw(PixelDisplay graphic) {
+        SpriteDrawer.drawSprite(graphic, getCurrentSprite(), (int) x, (int) y);
     }
 
-    @Override
-    public void onButtonRelease(ButtonListener.GameButton button) {
-        System.out.println("up: " + button);
-        move(button, false);
-    }
+    private int[][] getCurrentSprite() {
+        boolean isMoving = leftPressed || rightPressed;
 
-    public void move(ButtonListener.GameButton button, boolean isDown) {
-        switch (button) {
-            case LEFT -> xAcceleration = isDown ? -0.10 : 0;
-            case RIGHT -> xAcceleration = isDown ? 0.10 : 0;
-            default -> {
-            } // ignore the rest
+        if (!isMoving) {
+            return DwarfSprites.STANDING_DWARF;
         }
+
+        return DwarfSprites.RUNNING_FRAMES[animationFrame];
+    }
+
+    public void onButtonPress(GameButton button) {
+        if (button == GameButton.LEFT) {
+            leftPressed = true;
+        }
+
+        if (button == GameButton.RIGHT) {
+            rightPressed = true;
+        }
+    }
+
+    public void onButtonRelease(GameButton button) {
+        if (button == GameButton.LEFT) {
+            leftPressed = false;
+        }
+
+        if (button == GameButton.RIGHT) {
+            rightPressed = false;
+        }
+    }
+
+    public int getScore() {
+        return score;
     }
 }

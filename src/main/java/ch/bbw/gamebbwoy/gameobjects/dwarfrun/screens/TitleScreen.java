@@ -1,6 +1,8 @@
 package ch.bbw.gamebbwoy.gameobjects.dwarfrun.screens;
 
+import ch.bbw.gamebbwoy.api.ButtonListener;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
+import ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites.PixelText;
 
 public class TitleScreen implements GameScreen {
 
@@ -11,7 +13,6 @@ public class TitleScreen implements GameScreen {
             "HIGHSCORE",
             "CHARACTER"
     };
-
 
     @Override
     public void update() {
@@ -52,11 +53,11 @@ public class TitleScreen implements GameScreen {
     }
 
     @Override
-    public void onButtonPress(GameButton button) {
+    public void onButtonPress(ButtonListener.GameButton button) {
         // Menü bewegen
     }
 
     @Override
-    public void onButtonRelease(GameButton button) {
+    public void onButtonRelease(ButtonListener.GameButton button) {
     }
 }
