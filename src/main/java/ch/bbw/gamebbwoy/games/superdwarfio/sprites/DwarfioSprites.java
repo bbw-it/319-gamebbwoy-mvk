@@ -1,4 +1,4 @@
-package ch.bbw.gamebbwoy.games.superdwarfio;
+package ch.bbw.gamebbwoy.games.superdwarfio.sprites;
 
 public class DwarfioSprites {
 
