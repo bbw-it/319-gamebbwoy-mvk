@@ -1,11 +1,11 @@
-package ch.bbw.gamebbwoy.gameobjects.dwarfrun;
+package ch.bbw.gamebbwoy.games.dwarfrun;
 
 import ch.bbw.gamebbwoy.api.ButtonListener;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
 import ch.bbw.gamebbwoy.api.PixelDrawing;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.screens.GameScreen;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.screens.PlayScreen;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.screens.TitleScreen;
+import ch.bbw.gamebbwoy.games.dwarfrun.screens.GameScreen;
+import ch.bbw.gamebbwoy.games.dwarfrun.screens.PlayScreen;
+import ch.bbw.gamebbwoy.games.dwarfrun.screens.TitleScreen;
 
 public class DwarfRunGame implements PixelDrawing, ButtonListener {
 

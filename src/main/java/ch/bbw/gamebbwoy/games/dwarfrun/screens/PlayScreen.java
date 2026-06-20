@@ -1,10 +1,10 @@
-package ch.bbw.gamebbwoy.gameobjects.dwarfrun.screens;
+package ch.bbw.gamebbwoy.games.dwarfrun.screens;
 
 import ch.bbw.gamebbwoy.api.ButtonListener;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.gameobjects.Dwarf;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.world.World;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.ui.ScoreOverlay;
+import ch.bbw.gamebbwoy.games.dwarfrun.gameobjects.Dwarf;
+import ch.bbw.gamebbwoy.games.dwarfrun.world.World;
+import ch.bbw.gamebbwoy.games.dwarfrun.ui.ScoreOverlay;
 
 public class PlayScreen implements GameScreen {
 

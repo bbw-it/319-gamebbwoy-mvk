@@ -1,10 +1,10 @@
-package ch.bbw.gamebbwoy.gameobjects.dwarfrun.gameobjects;
+package ch.bbw.gamebbwoy.games.dwarfrun.gameobjects;
 
 import ch.bbw.gamebbwoy.api.ButtonListener;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites.DwarfSprites;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites.SpriteDrawer;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.world.World;
+import ch.bbw.gamebbwoy.games.dwarfrun.sprites.DwarfSprites;
+import ch.bbw.gamebbwoy.games.dwarfrun.sprites.SpriteDrawer;
+import ch.bbw.gamebbwoy.games.dwarfrun.world.World;
 
 public class Dwarf implements ButtonListener {
 

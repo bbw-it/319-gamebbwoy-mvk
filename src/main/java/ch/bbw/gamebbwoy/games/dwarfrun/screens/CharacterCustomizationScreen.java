@@ -1,4 +1,4 @@
-package ch.bbw.gamebbwoy.gameobjects.dwarfrun.screens;
+package ch.bbw.gamebbwoy.games.dwarfrun.screens;
 
 public class CharacterCustomizationScreen {
     // TODO

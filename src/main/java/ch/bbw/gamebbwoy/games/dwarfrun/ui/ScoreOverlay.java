@@ -1,8 +1,8 @@
-package ch.bbw.gamebbwoy.gameobjects.dwarfrun.ui;
+package ch.bbw.gamebbwoy.games.dwarfrun.ui;
 
 import ch.bbw.gamebbwoy.api.PixelDisplay;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.gameobjects.Dwarf;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites.PixelText;
+import ch.bbw.gamebbwoy.games.dwarfrun.gameobjects.Dwarf;
+import ch.bbw.gamebbwoy.games.dwarfrun.sprites.PixelText;
 
 public class ScoreOverlay {
 

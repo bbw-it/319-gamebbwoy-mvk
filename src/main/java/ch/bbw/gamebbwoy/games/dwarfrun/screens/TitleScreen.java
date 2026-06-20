@@ -1,8 +1,8 @@
-package ch.bbw.gamebbwoy.gameobjects.dwarfrun.screens;
+package ch.bbw.gamebbwoy.games.dwarfrun.screens;
 
 import ch.bbw.gamebbwoy.api.ButtonListener;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites.PixelText;
+import ch.bbw.gamebbwoy.games.dwarfrun.sprites.PixelText;
 
 public class TitleScreen implements GameScreen {
 

@@ -1,4 +1,4 @@
-package ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites;
+package ch.bbw.gamebbwoy.games.dwarfrun.sprites;
 
 public class TileSprites {
 

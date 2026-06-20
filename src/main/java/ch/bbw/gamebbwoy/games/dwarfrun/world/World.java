@@ -1,8 +1,8 @@
-package ch.bbw.gamebbwoy.gameobjects.dwarfrun.world;
+package ch.bbw.gamebbwoy.games.dwarfrun.world;
 
 import ch.bbw.gamebbwoy.api.PixelDisplay;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites.SpriteDrawer;
-import ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites.TileSprites;
+import ch.bbw.gamebbwoy.games.dwarfrun.sprites.SpriteDrawer;
+import ch.bbw.gamebbwoy.games.dwarfrun.sprites.TileSprites;
 
 public class World {
 

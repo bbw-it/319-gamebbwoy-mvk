@@ -1,4 +1,4 @@
-package ch.bbw.gamebbwoy.gameobjects.bricks;
+package ch.bbw.gamebbwoy.games.bricks;
 
 import ch.bbw.gamebbwoy.api.PixelColor;
 import ch.bbw.gamebbwoy.api.PixelDisplay;

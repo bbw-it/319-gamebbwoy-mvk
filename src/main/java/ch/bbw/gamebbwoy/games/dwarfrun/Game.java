@@ -1,4 +1,4 @@
-package ch.bbw.gamebbwoy.gameobjects.dwarfrun;
+package ch.bbw.gamebbwoy.games.dwarfrun;
 
 import ch.bbw.gamebbwoy.internal.GameBbwoy;
 

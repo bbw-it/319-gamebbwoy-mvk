@@ -1,9 +1,9 @@
-package ch.bbw.gamebbwoy.gameobjects.bricks;
+package ch.bbw.gamebbwoy.games.bricks;
 
 import ch.bbw.gamebbwoy.api.ButtonListener;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
 import ch.bbw.gamebbwoy.api.PixelDrawing;
-import ch.bbw.gamebbwoy.gameobjects.bricks.movement.BatterMovement;
+import ch.bbw.gamebbwoy.games.bricks.movement.BatterMovement;
 import ch.bbw.gamebbwoy.internal.GameBbwoy;
 
 public class Bricks implements PixelDrawing, ButtonListener {

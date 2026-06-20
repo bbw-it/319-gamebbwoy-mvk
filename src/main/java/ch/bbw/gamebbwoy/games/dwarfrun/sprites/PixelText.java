@@ -1,4 +1,4 @@
-package ch.bbw.gamebbwoy.gameobjects.dwarfrun.sprites;
+package ch.bbw.gamebbwoy.games.dwarfrun.sprites;
 
 import ch.bbw.gamebbwoy.api.PixelColor;
 import ch.bbw.gamebbwoy.api.PixelDisplay;
