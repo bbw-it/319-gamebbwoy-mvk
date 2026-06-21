@@ -11,7 +11,7 @@ public class TitleScreen {
 
     private MenuItems[] menuItems = MenuItems.values();
 
-    public void drawTitleScreen(PixelDisplay graphic) {
+    public void initialize(PixelDisplay graphic) {
         drawTitle(graphic, TITLE);
         drawMenuItems(graphic);
     }
@@ -72,11 +72,12 @@ public class TitleScreen {
         this.selectedMenuItem = selectedMenuItem;
     }
 
-    public void update(PixelDisplay graphic) {
+    public void updateScreen(PixelDisplay graphic) {
         if (updated) {
             updated = false;
             graphic.clear();
-            drawTitleScreen(graphic);
+            drawTitle(graphic, TITLE);
+            drawMenuItems(graphic);
         }
     }
 }

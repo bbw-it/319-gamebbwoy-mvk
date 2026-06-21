@@ -15,7 +15,9 @@ public class PlayScreen {
         playing = true;
     }
 
-    public void update(PixelDisplay graphic) {
+    public void updateScreen(PixelDisplay graphic) {
+        // clear graphic and redraw dwarfio with every tick.
+        graphic.clear();
         dwarfio.tick(graphic);
     }
 
@@ -32,7 +34,11 @@ public class PlayScreen {
         this.playing = playing;
     }
 
-    public void onButtonPress(ButtonListener.GameButton button) {
+    public void onButtonRelease(ButtonListener.GameButton button) {
+        dwarfio.onButtonRelease(button);
+    }
 
+    public void onButtonPress(ButtonListener.GameButton button) {
+        dwarfio.onButtonPress(button);
     }
 }

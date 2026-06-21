@@ -18,7 +18,7 @@ public class Game implements PixelDrawing, ButtonListener {
 
     @Override
     public void initialize(PixelDisplay graphic) {
-        titleScreen.drawTitleScreen(graphic);
+        titleScreen.initialize(graphic);
     }
 
     @Override
@@ -26,14 +26,14 @@ public class Game implements PixelDrawing, ButtonListener {
         if (!playScreen.isPlaying()) {
             // while title screen is shown
             if (!titleScreen.isSelectedMenuItem()) {
-                titleScreen.update(graphic);
+                titleScreen.updateScreen(graphic);
             } else if (titleScreen.isSelectedMenuItem() && titleScreen.getMenuItemPosition() == 0) {
                 graphic.clear();
                 playScreen.initialize(graphic);
             }
         } else {
             // while play screen is shown
-            playScreen.update(graphic);
+            playScreen.updateScreen(graphic);
         }
     }
 
@@ -41,11 +41,10 @@ public class Game implements PixelDrawing, ButtonListener {
     public void onButtonRelease(GameButton button) {
         if (!playScreen.isPlaying()) {
             // while title screen is shown
-            // something like titleScreen.onButtonRelease(button); could be useful later
-
+            // At the moment no use case for titleScreen.onButtonRelease(button);
         } else {
             // while play screen is shown
-            // something like playScreen.onButtonRelease(button); could be useful later
+            playScreen.onButtonRelease(button);
         }
     }
 

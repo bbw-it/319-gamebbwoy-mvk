@@ -5,7 +5,7 @@ public class DwarfioSprites {
     // Aufgabe: Mit pixelpad.ch ein Sprite zeichnen und darstellen.
     // Das ist ein Array: Wir lesen via `xxx[zeile][spalte]` aus.
     // Der Wert 4 ist ein leeres Pixel.
-    public static final int[][] dwarf = {
+    public static final int[][] DWARFIO = {
             {0, 0, 0, 2, 2, 2, 3, 0, 0, 0, 0, 0},
             {0, 0, 2, 2, 2, 3, 1, 1, 0, 0, 0, 0},
             {0, 2, 2, 2, 3, 1, 3, 1, 1, 0, 0, 0},
@@ -21,7 +21,7 @@ public class DwarfioSprites {
     };
 
     //Stehen
-    public static final int[][] standingDwarf = {
+    public static final int[][] STANDING_DWARFIO = {
             {0, 0, 0, 2, 2, 2, 3, 0, 0, 0, 0, 0},
             {0, 0, 2, 2, 2, 3, 1, 1, 0, 0, 0, 0},
             {0, 2, 2, 2, 3, 1, 3, 1, 1, 0, 0, 0},
@@ -37,7 +37,7 @@ public class DwarfioSprites {
     };
 
     // Laufen 1
-    public static final int[][] runningDwarf1 = {
+    public static final int[][] RUNNING_DWARFIO_1 = {
             {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
             {4, 2, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
             {4, 4, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
@@ -53,7 +53,7 @@ public class DwarfioSprites {
     };
 
     //Laufen 2
-    public static final int[][] runningDwarf2 = {
+    public static final int[][] RUNNING_DWARFIO_2 = {
             {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
             {4, 4, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
             {4, 2, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
@@ -69,7 +69,7 @@ public class DwarfioSprites {
     };
 
     // Laufen 3
-    public static final int[][] runningDwarf3 = {
+    public static final int[][] RUNNING_DWARFIO_3 = {
             {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
             {4, 4, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
             {4, 2, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
@@ -85,7 +85,7 @@ public class DwarfioSprites {
     };
 
     // Laufen 4
-    public static final int[][] runningDwarf4 = {
+    public static final int[][] RUNNING_DWARFIO_4 = {
             {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
             {4, 4, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
             {4, 2, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
@@ -101,7 +101,7 @@ public class DwarfioSprites {
     };
 
     // Laufen 5
-    public static final int[][] runningDwarf5 = {
+    public static final int[][] RUNNING_DWARFIO_5 = {
             {4, 4, 4, 2, 2, 2, 3, 4, 4, 4, 4, 4},
             {4, 2, 2, 2, 2, 3, 1, 1, 4, 4, 4, 4},
             {4, 2, 2, 2, 3, 1, 3, 1, 1, 4, 4, 4},
@@ -114,5 +114,17 @@ public class DwarfioSprites {
             {4, 4, 2, 1, 1, 1, 2, 4, 4, 4, 4, 4},
             {4, 4, 2, 4, 4, 4, 2, 2, 4, 4, 4, 4},
             {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}
+    };
+
+
+    public static final int[][][] RUNNING_FRAMES = {
+            RUNNING_DWARFIO_1,
+            RUNNING_DWARFIO_2,
+            RUNNING_DWARFIO_3,
+            RUNNING_DWARFIO_4,
+            RUNNING_DWARFIO_5,
+            RUNNING_DWARFIO_4,
+            RUNNING_DWARFIO_3,
+            RUNNING_DWARFIO_2
     };
 }
