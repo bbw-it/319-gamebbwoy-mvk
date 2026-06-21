@@ -1,48 +1,82 @@
 package ch.bbw.gamebbwoy.games.superdwarfio.screens;
 
 import ch.bbw.gamebbwoy.api.PixelDisplay;
+import ch.bbw.gamebbwoy.games.superdwarfio.sprites.LetterNumberAndSymbolSprites;
 
 public class TitleScreen {
+    private boolean selectedMenuItem = false;
+    private int menuItemPosition = 0;
+    private boolean updated = false;
+    private final String TITLE = "DWARFIO";
 
-    private int selectedMenuItem = 0;
+    private MenuItems[] menuItems = MenuItems.values();
 
-    private String[] menuItems = {
-            "START",
-            "HIGHSCORE",
-            "CHARACTER"
-    };
+    public void drawTitleScreen(PixelDisplay graphic) {
+        drawTitle(graphic, TITLE);
+        drawMenuItems(graphic);
+    }
 
-    public void draw(PixelDisplay graphic) {
-        PixelText.drawText(graphic, "DWARF RUN", 30, 10);
+    private void drawTitle(PixelDisplay graphic, String title) {
+        String upper_title = title.toUpperCase();
+        // x position of the title should be in the middle of the screen --> / 2
+        // to correct the position we subtract the title length times the width of a pixel character
+        int xOffset = graphic.getPixelWidth() / 2 - (title.length() * 3);
+        // This y position is only an estimate, so it appears somewhere around the middle position.
+        int yOffset = graphic.getPixelHeight() * 1 / 4;
 
+        LetterNumberAndSymbolSprites.drawText(graphic, upper_title, xOffset, yOffset);
+    }
+
+    private void drawMenuItems(PixelDisplay graphic) {
         for (int i = 0; i < menuItems.length; i++) {
-            int y = 30 + i * 8;
+            // This x offset is just an estimate, of what could look good.
+            int xOffset = graphic.getPixelWidth() / 2;
+            // The first menu item should appear 8 pixels below the title.
+            // Every other menu item should appear 8 pixels below the one before.
+            int yOffset = graphic.getPixelHeight() * 1 / 4 + 8 + (i * 8);
 
-            if (i == selectedMenuItem) {
-                PixelText.drawText(graphic, ">", 20, y);
+            if (i == menuItemPosition) {
+                // -10 pixels for the xOffset so the > symbol appears slightly to the left of the menu item
+                LetterNumberAndSymbolSprites.drawText(graphic, ">", xOffset - 10, yOffset);
             }
 
-            PixelText.drawText(graphic, menuItems[i], 30, y);
+            LetterNumberAndSymbolSprites.drawText(graphic, String.valueOf(menuItems[i]), xOffset, yOffset);
         }
     }
 
     public void moveSelectionUp() {
-        selectedMenuItem--;
-
-        if (selectedMenuItem < 0) {
-            selectedMenuItem = menuItems.length - 1;
+        menuItemPosition--;
+        if (menuItemPosition < 0) {
+            menuItemPosition = menuItems.length - 1;
         }
+        updated = true;
     }
 
     public void moveSelectionDown() {
-        selectedMenuItem++;
-
-        if (selectedMenuItem >= menuItems.length) {
-            selectedMenuItem = 0;
+        menuItemPosition++;
+        if (menuItemPosition >= menuItems.length) {
+            menuItemPosition = 0;
         }
+        updated = true;
     }
 
-    public int getSelectedMenuItem() {
+    public int getMenuItemPosition() {
+        return menuItemPosition;
+    }
+
+    public boolean isSelectedMenuItem() {
         return selectedMenuItem;
+    }
+
+    public void setSelectedMenuItem(boolean selectedMenuItem) {
+        this.selectedMenuItem = selectedMenuItem;
+    }
+
+    public void update(PixelDisplay graphic) {
+        if (updated) {
+            updated = false;
+            graphic.clear();
+            drawTitleScreen(graphic);
+        }
     }
 }
